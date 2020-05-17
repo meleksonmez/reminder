@@ -1,9 +1,12 @@
 package com.example.reminder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +21,25 @@ public class ListActivity extends AppCompatActivity {
     private final String listModeCode = "ListMode";
     private String title = "";
     private int listMode = 4;
+    SharedPreferences settings;
+    final String appModeKey = "appModeKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        final ConstraintLayout listLayout = (ConstraintLayout) findViewById(R.id.list_layout);
+
+        settings = getSharedPreferences("SQL", 0);
+
+        String appMode = settings.getString(appModeKey, "");
+        if(appMode.equalsIgnoreCase("ON")) {
+            listLayout.setBackgroundColor(Color.DKGRAY);
+        }
+        else {
+            listLayout.setBackgroundColor(Color.WHITE);
+        }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reminderNotes_recyclerView);
         TextView titleTextView = (TextView) findViewById(R.id.listType_textView);

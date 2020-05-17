@@ -1,14 +1,19 @@
 package com.example.reminder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +21,22 @@ import java.util.List;
 public class Settings extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     SharedPreferences settings;
-    String item = "";
+    String itemRepeat = "";
+    String itemTime = "";
+    String itemRingTone = "";
+    int itemRingTonePos = 0;
+    int itemTimePos = 0;
+    int itemRepeatPos = 0;
+
+    final static String appModeKey = "appModeKey";
+    final static String vibrationKey = "vibrationKey";
+    final static String repeatKey = "repeatKey";
+    final static String ringToneKey = "ringToneKey";
+    final static String timeKey = "timeKey";
+
+    Spinner spinnerRingTone;
+    Spinner spinnerRepeat;
+    Spinner spinnerAlarmTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +46,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         settings = getSharedPreferences("SQL", 0);
 
         ////////// Zil sesi /////////
-        final Spinner spinnerRingTone = (Spinner) findViewById(R.id.zilSesi_spinner);
+        spinnerRingTone = (Spinner) findViewById(R.id.zilSesi_spinner);
         spinnerRingTone.setOnItemSelectedListener(this);
 
         List<String> ringtone = new ArrayList<String>();
@@ -38,7 +58,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         spinnerRingTone.setAdapter(dataAdapter);
 
         ///////// Hatirlatma Sıklığı //////////
-        final Spinner spinnerRepeat = (Spinner) findViewById(R.id.hatirlatmaTekrari_spinner);
+        spinnerRepeat = (Spinner) findViewById(R.id.hatirlatmaTekrari_spinner);
         spinnerRepeat.setOnItemSelectedListener(this);
 
         List<String> repeat = new ArrayList<String>();
@@ -53,7 +73,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         spinnerRepeat.setAdapter(dataAdapter);
 
         ///////// Hatirlatma Zamani //////////
-        final Spinner spinnerAlarmTime = (Spinner) findViewById(R.id.hatirlatmaZamani_spinner);
+        spinnerAlarmTime = (Spinner) findViewById(R.id.hatirlatmaZamani_spinner);
         spinnerAlarmTime.setOnItemSelectedListener(this);
 
         List<String> alarmTime = new ArrayList<String>();
@@ -67,20 +87,90 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAlarmTime.setAdapter(dataAdapter);
 
-        //////// AppMode //////////
+        ////////////////// APP Mode ////////////////////////////
+        final ConstraintLayout settingsLayout = (ConstraintLayout) findViewById(R.id.settings_layout);
+
         final Switch appMode = (Switch) findViewById(R.id.appMode_switch);
+        final Button save = (Button) findViewById(R.id.settingsSave_button);
+        final CheckBox vibration = (CheckBox) findViewById(R.id.titresim_checkBox);
 
+        if(settings.getString(appModeKey,"").equalsIgnoreCase("OFF")) {
+            settingsLayout.setBackgroundColor(Color.WHITE);
+            appMode.setChecked(false);
+        }
+        else {
+            settingsLayout.setBackgroundColor(Color.DKGRAY);
+            appMode.setChecked(true);
+        }
 
+        appMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appMode.isChecked()) {
+                    settingsLayout.setBackgroundColor(Color.DKGRAY);
+                }
+                else {
+                    settingsLayout.setBackgroundColor(Color.WHITE);
+                }
+            }
+        });
 
+        if(settings.getString(vibrationKey,"").equalsIgnoreCase("True")) {
+            vibration.setChecked(true);
+        }
+        else {
+            vibration.setChecked(false);
+        }
 
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("firstTime", false);
-        editor.apply();
+        if(settings.getInt(ringToneKey, 0) != 0){
+            spinnerRingTone.setSelection(settings.getInt(ringToneKey, 0));
+        }
+
+        if(settings.getInt(timeKey, 0) != 0){
+            spinnerAlarmTime.setSelection(settings.getInt(timeKey, 0));
+        }
+
+        if(settings.getInt(repeatKey, 0) != 0){
+            spinnerRepeat.setSelection(settings.getInt(repeatKey, 0));
+        }
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = settings.edit();
+
+                String switchValue = appMode.isChecked() ? "ON" : "OFF";
+                String vib = vibration.isChecked() ? "true" : "false";
+
+                editor.putInt(ringToneKey, itemRingTonePos);
+                editor.putInt(repeatKey, itemRepeatPos);
+                editor.putInt(timeKey, itemTimePos);
+                editor.putString(vibrationKey, vib);
+                editor.putString(appModeKey, switchValue);
+
+                editor.commit();
+
+                Toast.makeText(Settings.this, "Saved", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        item = parent.getItemAtPosition(position).toString();
+        if(view == spinnerRingTone){
+            itemRingTone = parent.getItemAtPosition(position).toString();
+            itemRingTonePos = position;
+        }
+
+        if(view == spinnerAlarmTime){
+            itemTime = parent.getItemAtPosition(position).toString();
+            itemTimePos = position;
+        }
+
+        if(view == spinnerRepeat){
+            itemRepeat = parent.getItemAtPosition(position).toString();
+            itemRepeatPos = position;
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.reminder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private final String titleCode = "Title";
     private final String listModeCode = "ListMode";
     String title = "";
+    final String appModeKey = "appModeKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
 
         reminderNotesArrayList = new ArrayList<>();
         dbHelper = new DBHelper(MainActivity.this);
+        settings = getSharedPreferences("SQL", 0);
+        firstTime = settings.getBoolean("firstTime", true);
+
+        final ConstraintLayout mainLayout = (ConstraintLayout) findViewById(R.id.main_layout);
+        String appMode = settings.getString(appModeKey, "");
+
+        if(appMode.equalsIgnoreCase("ON")) {
+            mainLayout.setBackgroundColor(Color.DKGRAY);
+        }
+        else {
+            mainLayout.setBackgroundColor(16750592);
+        }
 
         ImageView todayImageView = (ImageView) findViewById(R.id.today_imageView);
         ImageView weekImageView = (ImageView) findViewById(R.id.week_imageView);
@@ -52,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button addNew = (Button) findViewById(R.id.addNew_button);
         Button settingsButton = (Button) findViewById(R.id.settings_button);
-
-        settings = getSharedPreferences("SQL", 0);
-        firstTime = settings.getBoolean("firstTime", true);
 
         if (firstTime) {
             hasFirstTime();

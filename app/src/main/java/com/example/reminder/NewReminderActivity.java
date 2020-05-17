@@ -1,14 +1,23 @@
 package com.example.reminder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +28,8 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
 
     DBHelper dbHelper;
     String item = "";
+    SharedPreferences settings;
+    final String appModeKey = "appModeKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +38,21 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
 
         dbHelper = new DBHelper(NewReminderActivity.this);
 
+        final ConstraintLayout newReminderLayout = (ConstraintLayout) findViewById(R.id.newReminder_layout);
+
+        settings = getSharedPreferences("SQL", 0);
+
+        String appMode = settings.getString(appModeKey, "");
+        if(appMode.equalsIgnoreCase("ON")) {
+            newReminderLayout.setBackgroundColor(Color.DKGRAY);
+        }
+        else {
+            newReminderLayout.setBackgroundColor(16750592);
+        }
+
         final EditText newTitle = (EditText) findViewById(R.id.newTitle_editText);
         final EditText newDetail = (EditText) findViewById(R.id.addNewDetail_editText);
-        final EditText newTime = (EditText) findViewById(R.id.addNewTime_editText);
+        final TextView newTimeText = (TextView) findViewById(R.id.addNewTime_editText);
 
         final Button addNewButton = (Button) findViewById(R.id.save_button);
         final Button shareButton = (Button) findViewById(R.id.share_button);
@@ -50,21 +73,51 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
+        final Calendar newCalendar = Calendar.getInstance();
+        newTimeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dialog = new DatePickerDialog(NewReminderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
+
+                        final Calendar newDate = Calendar.getInstance();
+                        Calendar newTime = Calendar.getInstance();
+                        TimePickerDialog time = new TimePickerDialog(NewReminderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                                newDate.set(year,month,dayOfMonth,hourOfDay,minute,0);
+                                Calendar tem = Calendar.getInstance();
+                                Log.w("TIME",System.currentTimeMillis()+"");
+                                if(newDate.getTimeInMillis()-tem.getTimeInMillis()>0)
+                                    newTimeText.setText(ReminderNotes.convertGregorianToDate(newDate));
+                                else
+                                    Toast.makeText(NewReminderActivity.this,"Invalid time",Toast.LENGTH_SHORT).show();
+                            }
+                        },newTime.get(Calendar.HOUR_OF_DAY),newTime.get(Calendar.MINUTE),true);
+                        time.show();
+                    }
+                },newCalendar.get(Calendar.YEAR),newCalendar.get(Calendar.MONTH),newCalendar.get(Calendar.DAY_OF_MONTH));
+
+                dialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                dialog.show();
+            }
+        });
+
         addNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!newTitle.getText().toString().equalsIgnoreCase("") &&
                 !newDetail.getText().toString().equalsIgnoreCase("") &&
-                !newTime.getText().toString().equalsIgnoreCase("") &&
+                !newTimeText.getText().toString().equalsIgnoreCase("") &&
                 !(item.equalsIgnoreCase("") || item.equalsIgnoreCase("Kategori Seçiniz"))){
                     ReminderNotes reminderNotes = new ReminderNotes();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(newTime.getDrawingTime());
 
                     reminderNotes.setReminderTitle(newTitle.getText().toString());
                     reminderNotes.setReminderDetail(newDetail.getText().toString());
                     reminderNotes.setReminderCategory(item);
-                    reminderNotes.setReminderTime(calendar);
+                    reminderNotes.setReminderTime(newCalendar);
                     reminderNotes.setChecked(false);
 
                     dbHelper.insertReminderNotes(reminderNotes);
