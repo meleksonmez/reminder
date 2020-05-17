@@ -95,7 +95,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         final CheckBox vibration = (CheckBox) findViewById(R.id.titresim_checkBox);
 
         if(settings.getString(appModeKey,"").equalsIgnoreCase("OFF")) {
-            settingsLayout.setBackgroundColor(Color.WHITE);
+            settingsLayout.setBackgroundColor(Color.rgb(255, 152, 0));
             appMode.setChecked(false);
         }
         else {
@@ -110,7 +110,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
                     settingsLayout.setBackgroundColor(Color.DKGRAY);
                 }
                 else {
-                    settingsLayout.setBackgroundColor(Color.WHITE);
+                    settingsLayout.setBackgroundColor(Color.rgb(255, 152, 0));
                 }
             }
         });

@@ -49,16 +49,6 @@ public class MainActivity extends AppCompatActivity {
         settings = getSharedPreferences("SQL", 0);
         firstTime = settings.getBoolean("firstTime", true);
 
-        final ConstraintLayout mainLayout = (ConstraintLayout) findViewById(R.id.main_layout);
-        String appMode = settings.getString(appModeKey, "");
-
-        if(appMode.equalsIgnoreCase("ON")) {
-            mainLayout.setBackgroundColor(Color.DKGRAY);
-        }
-        else {
-            mainLayout.setBackgroundColor(16750592);
-        }
-
         ImageView todayImageView = (ImageView) findViewById(R.id.today_imageView);
         ImageView weekImageView = (ImageView) findViewById(R.id.week_imageView);
         ImageView monthImageView = (ImageView) findViewById(R.id.month_imageView);
@@ -69,13 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (firstTime) {
             hasFirstTime();
-        }
-
-        try {
-            reminderNotesArrayList = dbHelper.getAllReminderNotes();
-        } catch (ParseException e) {
-            Toast.makeText(MainActivity.this, "Anımsatıcı listesine ulaşılamadı.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
 
         init();
@@ -160,6 +143,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init(){
+        try {
+            reminderNotesArrayList = dbHelper.getAllReminderNotes();
+        } catch (ParseException e) {
+            Toast.makeText(MainActivity.this, "Anımsatıcı listesine ulaşılamadı.", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
         TextView todayCountTextView = (TextView) findViewById(R.id.todayCount_textView);
         TextView weekCountTextView = (TextView) findViewById(R.id.weekCount_textView);
         TextView monthCountTextView = (TextView) findViewById(R.id.monthCount_textView);
@@ -169,6 +159,22 @@ public class MainActivity extends AppCompatActivity {
         weekCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, weekMode)));
         monthCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, monthMode)));
         allCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, allMode)));
+
+        final ConstraintLayout mainLayout = (ConstraintLayout) findViewById(R.id.main_layout);
+        String appMode = settings.getString(appModeKey, "");
+
+        if(appMode.equalsIgnoreCase("ON")) {
+            mainLayout.setBackgroundColor(Color.DKGRAY);
+        }
+        else {
+            mainLayout.setBackgroundColor(Color.rgb(255, 152, 0));
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        init();
     }
 
     @Override
@@ -182,5 +188,4 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         init();
     }
-
 }

@@ -29,17 +29,9 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        final ConstraintLayout listLayout = (ConstraintLayout) findViewById(R.id.list_layout);
-
         settings = getSharedPreferences("SQL", 0);
 
-        String appMode = settings.getString(appModeKey, "");
-        if(appMode.equalsIgnoreCase("ON")) {
-            listLayout.setBackgroundColor(Color.DKGRAY);
-        }
-        else {
-            listLayout.setBackgroundColor(Color.WHITE);
-        }
+        init();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reminderNotes_recyclerView);
         TextView titleTextView = (TextView) findViewById(R.id.listType_textView);
@@ -70,5 +62,23 @@ public class ListActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    public void init(){
+        final ConstraintLayout listLayout = (ConstraintLayout) findViewById(R.id.list_layout);
+
+        String appMode = settings.getString(appModeKey, "");
+        if(appMode.equalsIgnoreCase("ON")) {
+            listLayout.setBackgroundColor(Color.DKGRAY);
+        }
+        else {
+            listLayout.setBackgroundColor(Color.rgb(255, 152, 0));
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        init();
     }
 }

@@ -38,17 +38,9 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
 
         dbHelper = new DBHelper(NewReminderActivity.this);
 
-        final ConstraintLayout newReminderLayout = (ConstraintLayout) findViewById(R.id.newReminder_layout);
-
         settings = getSharedPreferences("SQL", 0);
 
-        String appMode = settings.getString(appModeKey, "");
-        if(appMode.equalsIgnoreCase("ON")) {
-            newReminderLayout.setBackgroundColor(Color.DKGRAY);
-        }
-        else {
-            newReminderLayout.setBackgroundColor(16750592);
-        }
+        init();
 
         final EditText newTitle = (EditText) findViewById(R.id.newTitle_editText);
         final EditText newDetail = (EditText) findViewById(R.id.addNewDetail_editText);
@@ -74,14 +66,13 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
         spinner.setAdapter(dataAdapter);
 
         final Calendar newCalendar = Calendar.getInstance();
+        final Calendar newDate = Calendar.getInstance();
         newTimeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog dialog = new DatePickerDialog(NewReminderActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, final int year, final int month, final int dayOfMonth) {
-
-                        final Calendar newDate = Calendar.getInstance();
                         Calendar newTime = Calendar.getInstance();
                         TimePickerDialog time = new TimePickerDialog(NewReminderActivity.this, new TimePickerDialog.OnTimeSetListener() {
                             @Override
@@ -117,7 +108,7 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
                     reminderNotes.setReminderTitle(newTitle.getText().toString());
                     reminderNotes.setReminderDetail(newDetail.getText().toString());
                     reminderNotes.setReminderCategory(item);
-                    reminderNotes.setReminderTime(newCalendar);
+                    reminderNotes.setReminderTime(newDate);
                     reminderNotes.setChecked(false);
 
                     dbHelper.insertReminderNotes(reminderNotes);
@@ -141,4 +132,20 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
         // TODO Auto-generated method stub
     }
 
+    public void init(){
+        final ConstraintLayout newReminderLayout = (ConstraintLayout) findViewById(R.id.newReminder_layout);
+        String appMode = settings.getString(appModeKey, "");
+        if(appMode.equalsIgnoreCase("ON")) {
+            newReminderLayout.setBackgroundColor(Color.DKGRAY);
+        }
+        else {
+            newReminderLayout.setBackgroundColor(Color.rgb(255, 152, 0));
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        init();
+    }
 }

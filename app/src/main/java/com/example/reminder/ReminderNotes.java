@@ -142,7 +142,7 @@ public class ReminderNotes {
     }
 
     public static String convertGregorianToDate(Calendar reminderTime){
-        SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         fmt.setCalendar(reminderTime);
 
         String dateFormatted = fmt.format(reminderTime.getTime());
