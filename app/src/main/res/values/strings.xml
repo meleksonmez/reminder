@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">reminder</string>
+    <string name="title"> ANIMSATICI </string>
+    <string name="today"> BUGÜN </string>
+    <string name="week"> HAFTALIK </string>
+    <string name="month"> AYLIK </string>
+    <string name="all"> TÜMÜ </string>
+    <string name="addnew"> Yeni Hatırlatıcı Ekle </string>
+    <string name="update"> GÜNCELLE </string>
+    <string name="save"> KAYDET </string>
+    <string name="share"> PAYLAŞ </string>
+    <string name="delete"> SİL </string>
+    <string name="back"> GERİ </string>
+    <string name="newtitle"> Başlık </string>
+    <string name="newdetail">  Açıklama </string>
+    <string name="newtime">  Tarih </string>
+    <string name="newcategory">  Kategori </string>
+    <string name="settings">  Ayarlar </string>
+    <string name="hatirlatmaZamani">  Hatırlatma Zamanı </string>
+    <string name="hatirlatmaTekrari">  Hatırlatma Sıklığı </string>
+    <string name="titresim">  Titreşim </string>
+    <string name="zilSesi">  Zil Sesi </string>
+    <string name="darkMode">  Ekran Modu </string>
+</resources>

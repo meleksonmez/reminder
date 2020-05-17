@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context=".Settings">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="366dp"
+        android:layout_height="657dp"
+        android:layout_marginTop="58dp"
+        android:layout_marginBottom="35dp"
+        android:background="@color/cardview_light_background"
+        android:orientation="vertical"
+        android:textAlignment="center"
+        android:theme="@style/AppTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/ayarlar_textView"
+            android:layout_width="216dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="147dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/settings"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/titresim_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titresim_textView"
+            android:layout_width="267dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/titresim"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/zilSesi_textView"
+            app:layout_constraintEnd_toStartOf="@+id/titresim_checkBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ayarlar_textView" />
+
+        <CheckBox
+            android:id="@+id/titresim_checkBox"
+            android:layout_width="28dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@+id/zilSesi_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/titresim_textView"
+            app:layout_constraintTop_toBottomOf="@+id/ayarlar_textView"
+            app:layout_constraintVertical_bias="0.433" />
+
+        <TextView
+            android:id="@+id/zilSesi_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/zilSesi"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/zilSesi_spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titresim_textView" />
+
+        <Spinner
+            android:id="@+id/zilSesi_spinner"
+            android:layout_width="298dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaZamani_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zilSesi_textView" />
+
+        <TextView
+            android:id="@+id/hatirlatmaZamani_textView"
+            android:layout_width="232dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/hatirlatmaZamani"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaZamani_spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/zilSesi_spinner" />
+
+        <Spinner
+            android:id="@+id/hatirlatmaZamani_spinner"
+            android:layout_width="298dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginBottom="5dp"
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaTekrari_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaZamani_textView" />
+
+        <TextView
+            android:id="@+id/hatirlatmaTekrari_textView"
+            android:layout_width="232dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/hatirlatmaTekrari"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaTekrari_spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaZamani_spinner" />
+
+        <Spinner
+            android:id="@+id/hatirlatmaTekrari_spinner"
+            android:layout_width="298dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="68dp"
+            android:layout_marginBottom="5dp"
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toTopOf="@+id/appMode_switch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaTekrari_textView" />
+
+        <Switch
+            android:id="@+id/appMode_switch"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/darkMode"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/settingsSave_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaTekrari_spinner" />
+
+        <Button
+            android:id="@+id/settingsSave_button"
+            android:layout_width="112dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="127dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="127dp"
+            android:layout_marginBottom="156dp"
+            android:background="@color/colorAccent"
+            android:text="save"
+            android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appMode_switch" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

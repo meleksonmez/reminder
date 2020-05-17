@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/today_linearLayout"
+        android:layout_width="166dp"
+        android:layout_height="152dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/month_linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/week_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/todayCount_textView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/today_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/today"
+            android:textAlignment="center"
+            android:background="@color/cardview_light_background"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/today_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_media_play" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/week_linearLayout"
+        android:layout_width="166dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/all_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/today_linearLayout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/weekCount_textView"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/week_textView"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:background="@color/cardview_light_background"
+            android:text="@string/week"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/week_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_media_next" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/month_linearLayout"
+        android:layout_width="164dp"
+        android:layout_height="154dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="165dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/all_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_linearLayout">
+
+        <TextView
+            android:id="@+id/monthCount_textView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/month_textView"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:text="@string/month"
+            android:textAlignment="center"
+            android:background="@color/cardview_light_background"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/month_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_media_ff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/all_linearLayout"
+        android:layout_width="165dp"
+        android:layout_height="152dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="165dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/month_linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/week_linearLayout">
+
+        <TextView
+            android:id="@+id/allCount_textView"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:textAlignment="textEnd"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/all_textView"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_weight="1"
+            android:text="@string/all"
+            android:textAlignment="center"
+            android:background="@color/cardview_light_background"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/all_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_agenda" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addNew_button"
+        android:layout_width="148dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="92dp"
+        android:background="@android:color/holo_green_dark"
+        android:text="@string/addnew"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/month_linearLayout" />
+
+    <TextView
+        android:id="@+id/title_textView"
+        android:layout_width="196dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="19dp"
+        android:background="@android:color/background_light"
+        android:text="@string/title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/today_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="59dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="335dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:foreground="@drawable/ic_settings_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
