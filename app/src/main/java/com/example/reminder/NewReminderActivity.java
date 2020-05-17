@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -121,6 +122,30 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!newTitle.getText().toString().equalsIgnoreCase("") &&
+                        !newDetail.getText().toString().equalsIgnoreCase("") &&
+                        !newTimeText.getText().toString().equalsIgnoreCase("") &&
+                        !(item.equalsIgnoreCase("") || item.equalsIgnoreCase("Kategori Seçiniz"))){
+                    ReminderNotes reminderNotes = new ReminderNotes();
+
+                    reminderNotes.setReminderTitle(newTitle.getText().toString());
+                    reminderNotes.setReminderDetail(newDetail.getText().toString());
+                    reminderNotes.setReminderCategory(item);
+                    reminderNotes.setReminderTime(newDate);
+
+                    final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    emailIntent.setType("plain/text");
+                    emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, ReminderNotes.toString(reminderNotes));
+                    startActivity(Intent.createChooser(emailIntent,"Sending email..."));
+                }
+                else{
+                    Toast.makeText(NewReminderActivity.this, "Tüm alanları doldurunuz.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

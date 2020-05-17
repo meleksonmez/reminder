@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -21,12 +22,8 @@ import java.util.List;
 public class Settings extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     SharedPreferences settings;
-    String itemRepeat = "";
-    String itemTime = "";
     String itemRingTone = "";
     int itemRingTonePos = 0;
-    int itemTimePos = 0;
-    int itemRepeatPos = 0;
 
     final static String appModeKey = "appModeKey";
     final static String vibrationKey = "vibrationKey";
@@ -35,8 +32,6 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     final static String timeKey = "timeKey";
 
     Spinner spinnerRingTone;
-    Spinner spinnerRepeat;
-    Spinner spinnerAlarmTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,42 +52,15 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRingTone.setAdapter(dataAdapter);
 
-        ///////// Hatirlatma Sıklığı //////////
-        spinnerRepeat = (Spinner) findViewById(R.id.hatirlatmaTekrari_spinner);
-        spinnerRepeat.setOnItemSelectedListener(this);
-
-        List<String> repeat = new ArrayList<String>();
-        repeat.add("Hatırlatma Sıklığı Seçiniz");
-        repeat.add("5");
-        repeat.add("10");
-        repeat.add("15");
-        repeat.add("30");
-
-        dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, repeat);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRepeat.setAdapter(dataAdapter);
-
-        ///////// Hatirlatma Zamani //////////
-        spinnerAlarmTime = (Spinner) findViewById(R.id.hatirlatmaZamani_spinner);
-        spinnerAlarmTime.setOnItemSelectedListener(this);
-
-        List<String> alarmTime = new ArrayList<String>();
-        alarmTime.add("Hatırlatma Sıklığı Seçiniz");
-        alarmTime.add("5");
-        alarmTime.add("10");
-        alarmTime.add("15");
-        alarmTime.add("30");
-
-        dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, alarmTime);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAlarmTime.setAdapter(dataAdapter);
+        final EditText repeatEditText = (EditText) findViewById(R.id.hatirlatmaTekrari_editText);
+        final EditText alarmTimeEditText = (EditText) findViewById(R.id.hatirlatmaZamani_editText);
+        final CheckBox vibration = (CheckBox) findViewById(R.id.titresim_checkBox);
 
         ////////////////// APP Mode ////////////////////////////
         final ConstraintLayout settingsLayout = (ConstraintLayout) findViewById(R.id.settings_layout);
 
         final Switch appMode = (Switch) findViewById(R.id.appMode_switch);
         final Button save = (Button) findViewById(R.id.settingsSave_button);
-        final CheckBox vibration = (CheckBox) findViewById(R.id.titresim_checkBox);
 
         if(settings.getString(appModeKey,"").equalsIgnoreCase("OFF")) {
             settingsLayout.setBackgroundColor(Color.rgb(255, 152, 0));
@@ -126,12 +94,12 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
             spinnerRingTone.setSelection(settings.getInt(ringToneKey, 0));
         }
 
-        if(settings.getInt(timeKey, 0) != 0){
-            spinnerAlarmTime.setSelection(settings.getInt(timeKey, 0));
+        if(!settings.getString(timeKey, "").equalsIgnoreCase("")){
+            repeatEditText.setText(settings.getString(timeKey, ""));
         }
 
-        if(settings.getInt(repeatKey, 0) != 0){
-            spinnerRepeat.setSelection(settings.getInt(repeatKey, 0));
+        if(!settings.getString(repeatKey, "").equalsIgnoreCase("")){
+            alarmTimeEditText.setText(settings.getString(repeatKey, ""));
         }
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -143,8 +111,8 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
                 String vib = vibration.isChecked() ? "true" : "false";
 
                 editor.putInt(ringToneKey, itemRingTonePos);
-                editor.putInt(repeatKey, itemRepeatPos);
-                editor.putInt(timeKey, itemTimePos);
+                editor.putString(repeatKey, repeatEditText.getText().toString());
+                editor.putString(timeKey, alarmTimeEditText.getText().toString());
                 editor.putString(vibrationKey, vib);
                 editor.putString(appModeKey, switchValue);
 
@@ -157,20 +125,8 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(view == spinnerRingTone){
-            itemRingTone = parent.getItemAtPosition(position).toString();
-            itemRingTonePos = position;
-        }
-
-        if(view == spinnerAlarmTime){
-            itemTime = parent.getItemAtPosition(position).toString();
-            itemTimePos = position;
-        }
-
-        if(view == spinnerRepeat){
-            itemRepeat = parent.getItemAtPosition(position).toString();
-            itemRepeatPos = position;
-        }
+        itemRingTone = parent.getItemAtPosition(position).toString();
+        itemRingTonePos = position;
     }
 
     @Override

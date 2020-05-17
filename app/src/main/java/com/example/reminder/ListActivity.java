@@ -56,6 +56,10 @@ public class ListActivity extends AppCompatActivity {
 
         reminderNotes = ReminderNotes.getRemindersWithType(reminderNotes, listMode);
 
+        if(reminderNotes.size() == 0){
+            Toast.makeText(ListActivity.this, "Gösterilecek not bulunmuyor.", Toast.LENGTH_SHORT).show();
+        }
+
         ReminderListViewAdapter reminderListViewAdapter = new ReminderListViewAdapter(this, reminderNotes);
         recyclerView.setAdapter(reminderListViewAdapter);
 

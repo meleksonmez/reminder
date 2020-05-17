@@ -117,20 +117,20 @@
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaZamani_spinner"
+            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaZamani_editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/zilSesi_spinner" />
 
-        <Spinner
-            android:id="@+id/hatirlatmaZamani_spinner"
+        <EditText
+            android:id="@+id/hatirlatmaZamani_editText"
             android:layout_width="298dp"
             android:layout_height="44dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="68dp"
             android:layout_marginBottom="5dp"
             android:inputType="number"
-            android:textColor="@android:color/holo_blue_dark"
+            android:textColor="@android:color/background_dark"
             app:layout_constraintBottom_toTopOf="@+id/hatirlatmaTekrari_textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -148,20 +148,20 @@
             android:textColor="@android:color/background_light"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaTekrari_spinner"
+            app:layout_constraintBottom_toTopOf="@+id/hatirlatmaTekrari_editText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaZamani_spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaZamani_editText" />
 
-        <Spinner
-            android:id="@+id/hatirlatmaTekrari_spinner"
+        <EditText
+            android:id="@+id/hatirlatmaTekrari_editText"
             android:layout_width="298dp"
             android:layout_height="45dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="68dp"
             android:layout_marginBottom="5dp"
             android:inputType="number"
-            android:textColor="@android:color/holo_blue_dark"
+            android:textColor="@android:color/background_dark"
             app:layout_constraintBottom_toTopOf="@+id/appMode_switch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +180,7 @@
             app:layout_constraintBottom_toTopOf="@+id/settingsSave_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaTekrari_spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/hatirlatmaTekrari_editText" />
 
         <Button
             android:id="@+id/settingsSave_button"

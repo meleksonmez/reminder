@@ -1,5 +1,7 @@
 package com.example.reminder;
 
+import androidx.annotation.NonNull;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,7 +81,7 @@ public class ReminderNotes {
         switch (type){
             case 1 : //today's reminders
                 for(ReminderNotes reminderNote : reminderNotes){
-                    diff = (Math.abs(today.getTimeInMillis() - reminderNote.reminderTime.getTimeInMillis())) / dayConverter;
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
                     if(diff >= 0 && diff < 1){
                         reminderNotesNew.add(reminderNote);
                     }
@@ -87,7 +89,7 @@ public class ReminderNotes {
                 return reminderNotesNew;
             case 2: //week's reminders
                 for(ReminderNotes reminderNote : reminderNotes){
-                    diff = (Math.abs(today.getTimeInMillis() - reminderNote.reminderTime.getTimeInMillis())) / dayConverter;
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
                     if(diff >= 0 && diff < 7){
                         reminderNotesNew.add(reminderNote);
                     }
@@ -95,7 +97,7 @@ public class ReminderNotes {
                 return reminderNotesNew;
             case 3: //month's reminders
                 for(ReminderNotes reminderNote : reminderNotes){
-                    diff = (Math.abs(today.getTimeInMillis() - reminderNote.reminderTime.getTimeInMillis())) / dayConverter;
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
                     if(diff >= 0 && diff < 30){
                         reminderNotesNew.add(reminderNote);
                     }
@@ -114,7 +116,7 @@ public class ReminderNotes {
         switch (type){
             case 1 : //today's reminders
                 for(ReminderNotes reminderNote : reminderNotes){
-                    diff = (Math.abs(today.getTimeInMillis() - reminderNote.reminderTime.getTimeInMillis())) / dayConverter;
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
                     if(diff >= 0 && diff < 1){
                         reminderNotesNew.add(reminderNote);
                     }
@@ -122,7 +124,7 @@ public class ReminderNotes {
                 return reminderNotesNew.size();
             case 2: //week's reminders
                 for(ReminderNotes reminderNote : reminderNotes){
-                    diff = (Math.abs(today.getTimeInMillis() - reminderNote.reminderTime.getTimeInMillis())) / dayConverter;
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
                     if(diff >= 0 && diff < 7){
                         reminderNotesNew.add(reminderNote);
                     }
@@ -130,7 +132,7 @@ public class ReminderNotes {
                 return reminderNotesNew.size();
             case 3: //month's reminders
                 for(ReminderNotes reminderNote : reminderNotes){
-                    diff = (Math.abs(today.getTimeInMillis() - reminderNote.reminderTime.getTimeInMillis())) / dayConverter;
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
                     if(diff >= 0 && diff < 30){
                         reminderNotesNew.add(reminderNote);
                     }
@@ -148,5 +150,14 @@ public class ReminderNotes {
         String dateFormatted = fmt.format(reminderTime.getTime());
 
         return dateFormatted;
+    }
+
+    public static String toString(ReminderNotes reminderNotes) {
+        String text = "";
+        text += "Not Başlığı: " + reminderNotes.getReminderTitle() + "\n";
+        text += "Not Detayı: " + reminderNotes.getReminderDetail() + "\n";
+        text += "Not Kategorisi: " + reminderNotes.getReminderCategory() + "\n";
+        text += "Not Gerçekleşme Zamanı: " + ReminderNotes.convertGregorianToDate(reminderNotes.getReminderTime()) + "\n";
+        return text;
     }
 }
