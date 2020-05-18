@@ -3,11 +3,15 @@ package com.example.reminder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +35,10 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
     String item = "";
     SharedPreferences settings;
     final String appModeKey = "appModeKey";
+    final static String vibrationKey = "vibrationKey";
+    final static String ringToneKey = "ringToneKey";
+    final static String repeatKey = "repeatKey";
+    final static String timeKey = "timeKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +121,57 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
                     reminderNotes.setChecked(false);
 
                     dbHelper.insertReminderNotes(reminderNotes);
+
+                    long[] vibration = {settings.getLong(vibrationKey, 0), 0};
+
+                    String ringTone = settings.getString(ringToneKey, "");
+                    String alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
+                    if(ringTone.equalsIgnoreCase("ALARM")){
+                        alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
+                    } else if (ringTone.equalsIgnoreCase("NOTIFICATION")){
+                        alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString();
+                    } else if (ringTone.equalsIgnoreCase("RINGTONE")) {
+                        alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE).toString();
+                    }
+
+                    Intent intent = new Intent(NewReminderActivity.this,NotifierAlarm.class);
+                    intent.putExtra("Title", reminderNotes.getReminderTitle());
+                    intent.putExtra("Message", reminderNotes.getReminderDetail());
+                    intent.putExtra("RemindDate", reminderNotes.getReminderTime().getTimeInMillis());
+                    intent.putExtra("id", reminderNotes.getID());
+                    intent.putExtra("Vibration", vibration);
+                    intent.putExtra("RingTone", alarmsound);
+
+                    PendingIntent alarmIntent = PendingIntent.getBroadcast(NewReminderActivity.this, reminderNotes.getID(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    int repeatSetting = settings.getInt(repeatKey, 0);
+                    long repeat = 15;
+                    if(repeatSetting == 15){
+                        repeat = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+                    } else if (repeatSetting == 30) {
+                        repeat = AlarmManager.INTERVAL_HALF_HOUR;
+                    } else if (repeatSetting == 60){
+                        repeat = AlarmManager.INTERVAL_HOUR;
+                    }
+
+                    int timeSetting = settings.getInt(timeKey, 0);
+                    long time = reminderNotes.getReminderTime().getTimeInMillis();
+                    if(timeSetting == 15){
+                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
+                    } else if (timeSetting == 30) {
+                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
+                    } else if (timeSetting == 60){
+                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
+                    }
+
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                    //alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderNotes.getReminderTime().getTimeInMillis(), intent1);
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time, repeat, alarmIntent);
+
+                    newTitle.setText("");
+                    newDetail.setText("");
+                    newTimeText.setText("");
+                    spinner.setSelection(0);
 
                     Toast.makeText(NewReminderActivity.this, "Not eklendi.", Toast.LENGTH_SHORT).show();
                 }

@@ -143,6 +143,47 @@ public class ReminderNotes {
         return reminderNotes.size();
     }
 
+    public static int getCheckedRemindersCount(ArrayList<ReminderNotes> reminderNotes, int type){
+        ArrayList<ReminderNotes> reminderNotesNew = new ArrayList<>();
+        Calendar today = Calendar.getInstance();
+        double dayConverter = 24 * 60 * 60 * 1000;
+        double diff;
+
+        switch (type){
+            case 1 : //today's reminders
+                for(ReminderNotes reminderNote : reminderNotes){
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
+                    if(diff >= 0 && diff < 1 && reminderNote.isChecked()){
+                        reminderNotesNew.add(reminderNote);
+                    }
+                }
+                return reminderNotesNew.size();
+            case 2: //week's reminders
+                for(ReminderNotes reminderNote : reminderNotes){
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
+                    if(diff >= 0 && diff < 7  && reminderNote.isChecked()){
+                        reminderNotesNew.add(reminderNote);
+                    }
+                }
+                return reminderNotesNew.size();
+            case 3: //month's reminders
+                for(ReminderNotes reminderNote : reminderNotes){
+                    diff = (reminderNote.getReminderTime().getTimeInMillis() - today.getTimeInMillis()) / dayConverter;
+                    if(diff >= 0 && diff < 30  && reminderNote.isChecked()){
+                        reminderNotesNew.add(reminderNote);
+                    }
+                }
+                return reminderNotesNew.size();
+            default:
+                for(ReminderNotes reminderNote : reminderNotes){
+                    if(reminderNote.isChecked()){
+                        reminderNotesNew.add(reminderNote);
+                    }
+                }
+                return reminderNotesNew.size();
+        }
+    }
+
     public static String convertGregorianToDate(Calendar reminderTime){
         SimpleDateFormat fmt = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         fmt.setCalendar(reminderTime);

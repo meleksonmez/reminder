@@ -4,25 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -151,10 +145,19 @@ public class MainActivity extends AppCompatActivity {
         TextView monthCountTextView = (TextView) findViewById(R.id.monthCount_textView);
         TextView allCountTextView = (TextView) findViewById(R.id.allCount_textView);
 
-        todayCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, dayMode)));
-        weekCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, weekMode)));
-        monthCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, monthMode)));
-        allCountTextView.setText(String.valueOf(ReminderNotes.getRemindersCount(reminderNotesArrayList, allMode)));
+        String todayText = "Tamamlanma oranı: " + ReminderNotes.getCheckedRemindersCount(reminderNotesArrayList, dayMode) + "/"
+                + ReminderNotes.getRemindersCount(reminderNotesArrayList, dayMode);
+        String weekText = "Tamamlanma oranı: " + ReminderNotes.getCheckedRemindersCount(reminderNotesArrayList, weekMode) + "/"
+                + ReminderNotes.getRemindersCount(reminderNotesArrayList, weekMode);
+        String monthText = "Tamamlanma oranı: " + ReminderNotes.getCheckedRemindersCount(reminderNotesArrayList, monthMode) + "/"
+                + ReminderNotes.getRemindersCount(reminderNotesArrayList, monthMode);
+        String allText = "Tamamlanma oranı: " + ReminderNotes.getCheckedRemindersCount(reminderNotesArrayList, allMode) + "/"
+                + ReminderNotes.getRemindersCount(reminderNotesArrayList, allMode);
+
+        todayCountTextView.setText(todayText);
+        weekCountTextView.setText(weekText);
+        monthCountTextView.setText(monthText);
+        allCountTextView.setText(allText);
 
         final ConstraintLayout mainLayout = (ConstraintLayout) findViewById(R.id.main_layout);
         String appMode = settings.getString(appModeKey, "");

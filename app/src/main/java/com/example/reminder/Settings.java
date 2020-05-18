@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,9 +45,10 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         spinnerRingTone = (Spinner) findViewById(R.id.zilSesi_spinner);
         spinnerRingTone.setOnItemSelectedListener(this);
 
-        List<String> ringtone = new ArrayList<String>();
-        ringtone.add("Zil Sesi Seçiniz");
-        ringtone.add(NoteCategory.getBirthday());
+        List<String> ringtone = new ArrayList<>();
+        ringtone.add("ALARM");
+        ringtone.add("NOTIFICATION");
+        ringtone.add("RINGTONE");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ringtone);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,42 +85,51 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
             }
         });
 
-        if(settings.getString(vibrationKey,"").equalsIgnoreCase("True")) {
+        if(settings.getLong(vibrationKey,0) != 0) {
             vibration.setChecked(true);
         }
         else {
             vibration.setChecked(false);
         }
 
-        if(settings.getInt(ringToneKey, 0) != 0){
-            spinnerRingTone.setSelection(settings.getInt(ringToneKey, 0));
+        String tone = settings.getString(ringToneKey, "ALARM");
+        if(tone.equalsIgnoreCase("ALARM")){
+            spinnerRingTone.setSelection(0);
+        } else if (tone.equalsIgnoreCase("NOTIFICATION")){
+            spinnerRingTone.setSelection(1);
+        } else if (tone.equalsIgnoreCase("RINGTONE")){
+            spinnerRingTone.setSelection(2);
         }
 
-        if(!settings.getString(timeKey, "").equalsIgnoreCase("")){
-            repeatEditText.setText(settings.getString(timeKey, ""));
-        }
-
-        if(!settings.getString(repeatKey, "").equalsIgnoreCase("")){
-            alarmTimeEditText.setText(settings.getString(repeatKey, ""));
-        }
+        repeatEditText.setText(String.valueOf(settings.getInt(timeKey, 15)));
+        alarmTimeEditText.setText(String.valueOf(settings.getInt(repeatKey, 15)));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = settings.edit();
+                if((repeatEditText.getText().toString().equalsIgnoreCase("15") ||
+                   repeatEditText.getText().toString().equalsIgnoreCase("30") ||
+                   repeatEditText.getText().toString().equalsIgnoreCase("60")) &&
+                   (alarmTimeEditText.getText().toString().equalsIgnoreCase("15") ||
+                    alarmTimeEditText.getText().toString().equalsIgnoreCase("30") ||
+                    alarmTimeEditText.getText().toString().equalsIgnoreCase("60"))
+                ) {
+                    SharedPreferences.Editor editor = settings.edit();
+                    String switchValue = appMode.isChecked() ? "ON" : "OFF";
+                    long vib = vibration.isChecked() ? 12345678 : 0;
 
-                String switchValue = appMode.isChecked() ? "ON" : "OFF";
-                String vib = vibration.isChecked() ? "true" : "false";
+                    editor.putString(ringToneKey, itemRingTone);
+                    editor.putInt(repeatKey, Integer.parseInt(repeatEditText.getText().toString()));
+                    editor.putInt(timeKey, Integer.parseInt(alarmTimeEditText.getText().toString()));
+                    editor.putLong(vibrationKey, vib);
+                    editor.putString(appModeKey, switchValue);
 
-                editor.putInt(ringToneKey, itemRingTonePos);
-                editor.putString(repeatKey, repeatEditText.getText().toString());
-                editor.putString(timeKey, alarmTimeEditText.getText().toString());
-                editor.putString(vibrationKey, vib);
-                editor.putString(appModeKey, switchValue);
+                    editor.commit();
 
-                editor.commit();
-
-                Toast.makeText(Settings.this, "Saved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "Kaydedildi.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(Settings.this, "Hatırlatma Sıklığı/Hatırlatma Zamanı için geçerli bir değer giriniz: (15, 30, 60)", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
