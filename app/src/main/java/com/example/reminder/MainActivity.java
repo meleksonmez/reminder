@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         todayImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reminderNotesArrayList = ReminderNotes.getRemindersWithType(reminderNotesArrayList, dayMode);
                 title = "Bugünün Notları";
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra(titleCode, title);
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         weekImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reminderNotesArrayList = ReminderNotes.getRemindersWithType(reminderNotesArrayList, weekMode);
                 title = "Haftalık Notlar";
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra(titleCode, title);
@@ -90,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         monthImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reminderNotesArrayList = ReminderNotes.getRemindersWithType(reminderNotesArrayList, monthMode);
                 title = "Aylık Notlar";
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra(titleCode, title);
@@ -102,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         allImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reminderNotesArrayList = ReminderNotes.getRemindersWithType(reminderNotesArrayList, allMode);
                 title = "Tüm Notlar";
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
                 intent.putExtra(titleCode, title);

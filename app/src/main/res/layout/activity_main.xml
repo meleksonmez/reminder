@@ -30,6 +30,8 @@
             android:background="@color/colorPrimaryDark"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="24sp"
             android:textStyle="bold|italic" />
 
         <TextView
@@ -74,6 +76,8 @@
             android:background="@color/colorPrimaryDark"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="24sp"
             android:textStyle="bold|italic" />
 
         <TextView
@@ -119,6 +123,8 @@
             android:background="@color/colorPrimaryDark"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="24sp"
             android:textStyle="bold|italic" />
 
         <TextView
@@ -164,6 +170,8 @@
             android:background="@color/colorPrimaryDark"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="24sp"
             android:textStyle="bold|italic" />
 
         <TextView
