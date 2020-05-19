@@ -145,7 +145,7 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
                     PendingIntent alarmIntent = PendingIntent.getBroadcast(NewReminderActivity.this, reminderNotes.getID(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     int repeatSetting = settings.getInt(repeatKey, 0);
-                    long repeat = 15;
+                    long repeat = 0;
                     if(repeatSetting == 15){
                         repeat = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
                     } else if (repeatSetting == 30) {

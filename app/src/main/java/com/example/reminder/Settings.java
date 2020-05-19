@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +25,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
 
     SharedPreferences settings;
     String itemRingTone = "";
+    Uri itemRingToneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
     int itemRingTonePos = 0;
 
     final static String appModeKey = "appModeKey";
@@ -101,25 +103,27 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
             spinnerRingTone.setSelection(2);
         }
 
-        repeatEditText.setText(String.valueOf(settings.getInt(timeKey, 15)));
+        repeatEditText.setText(String.valueOf(settings.getInt(repeatKey, 15)));
         alarmTimeEditText.setText(String.valueOf(settings.getInt(timeKey, 15)));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((repeatEditText.getText().toString().equalsIgnoreCase("15") ||
+                if((repeatEditText.getText().toString().equalsIgnoreCase("0") ||
+                   repeatEditText.getText().toString().equalsIgnoreCase("15") ||
                    repeatEditText.getText().toString().equalsIgnoreCase("30") ||
                    repeatEditText.getText().toString().equalsIgnoreCase("60")) &&
+                   (alarmTimeEditText.getText().toString().equalsIgnoreCase("0") ||
                    (alarmTimeEditText.getText().toString().equalsIgnoreCase("5") ||
                     alarmTimeEditText.getText().toString().equalsIgnoreCase("10") ||
                     alarmTimeEditText.getText().toString().equalsIgnoreCase("15") ||
                     alarmTimeEditText.getText().toString().equalsIgnoreCase("30"))
-                ) {
+                )) {
                     SharedPreferences.Editor editor = settings.edit();
                     String switchValue = appMode.isChecked() ? "ON" : "OFF";
                     long vib = vibration.isChecked() ? 12345678 : 0;
 
-                    editor.putString(ringToneKey, itemRingTone);
+                    editor.putString(ringToneKey, itemRingToneUri.toString());
                     editor.putInt(repeatKey, Integer.parseInt(repeatEditText.getText().toString()));
                     editor.putInt(timeKey, Integer.parseInt(alarmTimeEditText.getText().toString()));
                     editor.putLong(vibrationKey, vib);
@@ -139,6 +143,13 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         itemRingTone = parent.getItemAtPosition(position).toString();
         itemRingTonePos = position;
+        if(position == 0){
+            itemRingToneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        } else if (position == 1){
+            itemRingToneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        } else if (position == 2){
+            itemRingToneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        }
     }
 
     @Override
