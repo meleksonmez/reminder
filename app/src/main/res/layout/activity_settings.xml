@@ -129,7 +129,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="68dp"
             android:layout_marginBottom="5dp"
-            android:hint="15, 30, 60"
+            android:hint="5, 10, 15, 30"
             android:inputType="number"
             android:textColor="@android:color/background_dark"
             app:layout_constraintBottom_toTopOf="@+id/hatirlatmaTekrari_textView"

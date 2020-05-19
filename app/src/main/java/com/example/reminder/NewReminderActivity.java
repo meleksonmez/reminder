@@ -123,8 +123,8 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
                     dbHelper.insertReminderNotes(reminderNotes);
 
                     long[] vibration = {settings.getLong(vibrationKey, 0), 0};
-
                     String ringTone = settings.getString(ringToneKey, "");
+
                     String alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
                     if(ringTone.equalsIgnoreCase("ALARM")){
                         alarmsound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM).toString();
@@ -156,11 +156,13 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
 
                     int timeSetting = settings.getInt(timeKey, 0);
                     long time = reminderNotes.getReminderTime().getTimeInMillis();
-                    if(timeSetting == 15){
+                    if(timeSetting == 5){
                         time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
-                    } else if (timeSetting == 30) {
+                    } else if (timeSetting == 10) {
                         time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
-                    } else if (timeSetting == 60){
+                    } else if (timeSetting == 15){
+                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
+                    } else if (timeSetting == 30){
                         time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
                     }
 

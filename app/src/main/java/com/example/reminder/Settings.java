@@ -102,7 +102,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
         }
 
         repeatEditText.setText(String.valueOf(settings.getInt(timeKey, 15)));
-        alarmTimeEditText.setText(String.valueOf(settings.getInt(repeatKey, 15)));
+        alarmTimeEditText.setText(String.valueOf(settings.getInt(timeKey, 15)));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,9 +110,10 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
                 if((repeatEditText.getText().toString().equalsIgnoreCase("15") ||
                    repeatEditText.getText().toString().equalsIgnoreCase("30") ||
                    repeatEditText.getText().toString().equalsIgnoreCase("60")) &&
-                   (alarmTimeEditText.getText().toString().equalsIgnoreCase("15") ||
-                    alarmTimeEditText.getText().toString().equalsIgnoreCase("30") ||
-                    alarmTimeEditText.getText().toString().equalsIgnoreCase("60"))
+                   (alarmTimeEditText.getText().toString().equalsIgnoreCase("5") ||
+                    alarmTimeEditText.getText().toString().equalsIgnoreCase("10") ||
+                    alarmTimeEditText.getText().toString().equalsIgnoreCase("15") ||
+                    alarmTimeEditText.getText().toString().equalsIgnoreCase("30"))
                 ) {
                     SharedPreferences.Editor editor = settings.edit();
                     String switchValue = appMode.isChecked() ? "ON" : "OFF";
@@ -128,7 +129,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemSel
 
                     Toast.makeText(Settings.this, "Kaydedildi.", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(Settings.this, "Hatırlatma Sıklığı/Hatırlatma Zamanı için geçerli bir değer giriniz: (15, 30, 60)", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Settings.this, "Hatırlatma Sıklığı/Hatırlatma Zamanı için geçerli bir değer giriniz: (örn.: 15, 30)", Toast.LENGTH_LONG).show();
                 }
             }
         });
