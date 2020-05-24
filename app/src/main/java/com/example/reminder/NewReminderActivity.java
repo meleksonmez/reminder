@@ -156,13 +156,7 @@ public class NewReminderActivity extends AppCompatActivity implements AdapterVie
 
                     int timeSetting = settings.getInt(timeKey, 0);
                     long time = reminderNotes.getReminderTime().getTimeInMillis();
-                    if(timeSetting == 5){
-                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
-                    } else if (timeSetting == 10) {
-                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
-                    } else if (timeSetting == 15){
-                        time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
-                    } else if (timeSetting == 30){
+                    if(timeSetting != 0){
                         time = reminderNotes.getReminderTime().getTimeInMillis() - (timeSetting * 60 * 1000);
                     }
 
